@@ -5,6 +5,9 @@ on:
     paths:
       - 'slack-request.txt'
 
+permissions:
+  contents: write
+
 jobs:
   send:
     runs-on: ubuntu-latest
@@ -12,9 +15,9 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Set up Python
-  - uses: actions/checkout@v3
+        uses: actions/setup-python@v4
         with:
-          fetch-depth: 0
+          python-version: '3.11'
 
       - name: Install dependencies
         run: pip install slack-sdk
@@ -24,14 +27,26 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         run: python scripts/slack_send.py
 
-- name: Commit response
+      - name: Write response via GitHub API
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh api \
-            --method PUT \
-            -H "Accept: application/vnd.github+json" \
-            /repos/${{ github.repository }}/contents/slack-response.txt \
-            -f message="slack response" \
-            -f content="$(base64 -w 0 slack-response.txt)" \
-            -f sha="$(gh api /repos/${{ github.repository }}/contents/slack-response.txt --jq '.sha' 2>/dev/null || echo '')"
+          SHA=$(gh api /repos/${{ github.repository }}/contents/slack-response.txt \
+            --jq '.sha' 2>/dev/null || echo "")
+          
+          CONTENT=$(base64 -w 0 slack-response.txt)
+          
+          if [ -n "$SHA" ]; then
+            gh api --method PUT \
+              -H "Accept: application/vnd.github+json" \
+              /repos/${{ github.repository }}/contents/slack-response.txt \
+              -f message="slack response" \
+              -f content="$CONTENT" \
+              -f sha="$SHA"
+          else
+            gh api --method PUT \
+              -H "Accept: application/vnd.github+json" \
+              /repos/${{ github.repository }}/contents/slack-response.txt \
+              -f message="slack response" \
+              -f content="$CONTENT"
+          fi
