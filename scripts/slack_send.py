@@ -3,7 +3,7 @@ from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
 # Read request
-with open("slack-request.txt", "r") as f:
+with open("Slack/slack-request.txt", "r") as f:
     lines = f.read().strip().splitlines()
 
 fields = {}
