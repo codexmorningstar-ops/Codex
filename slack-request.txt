@@ -1,0 +1,2 @@
+channel: #U0A7N6K5Y6P
+message: Whatever Codex wants to say.
