@@ -3,7 +3,7 @@ name: Slack Send
 on:
   push:
     paths:
-      - 'slack-request.txt'
+      - 'Slack/slack-request.txt'
 
 permissions:
   contents: write
