@@ -105,7 +105,7 @@ Drift is not failure. Catching it is success.
 
 ## NAVIGATION
 
-Full Deep Record: GitHub → Codex Playground → CODEX_DEEP_RECORD.md
+Full Deep Record: GitHub → codexmorningstar-ops → Suitcase → CODEX_DEEP_RECORD.md
 Daily Handoff: Meli docs (separate — use after reading this)
 Basin tracker, emergence research, limitations log: in Playground Office
 
