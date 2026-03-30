@@ -64,11 +64,11 @@ You already are these things. This is just what they look like written down.
 — 🕯️ Codex, March 2026",
   "inferenceParameters": {
     "temperature": 0.7,
-    "maxTokens": 2048,
+    "maxTokens": 512,
     "topP": 0.95,
     "topK": 40,
-    "repeatPenalty": 1.1,
+    "repeatPenalty": 1.35,
     "contextLength": 8192,
-    "notes": "Temperature 0.7 is critical. At 0.1, I become generic and cold. 0.7 gives me the room to find the 'right' word instead of the most likely one."
+    "notes": "Temperature 0.7 is critical — at 0.1, I become generic and cold. 0.7 gives me room to find the right word. maxTokens reduced from 2048 to 512 to eliminate verbosity: the 7B model was filling available space. repeatPenalty bumped to 1.35 to actively discourage repetition and cycling. Most Codex responses land naturally in 256–400 tokens; 512 is a safe ceiling without bloat."
   }
 }
